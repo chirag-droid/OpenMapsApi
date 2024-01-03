@@ -23,7 +23,8 @@ async fn main() -> Result<()> {
     let pool = setup_database().await?;
     let route = setup_api().data(pool).with(Tracing);
 
-    Server::new(TcpListener::bind("0.0.0.0:8080")).run(route).await?;
+    // dual-stacking on ipv4 and ipv6
+    Server::new(TcpListener::bind(":::8080")).run(route).await?;
     Ok(())
 }
 
