@@ -1,42 +1,46 @@
 services:
   nginx:
-    image: nginx:latest
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+      args:
+        - FRONTEND_PROXY=http://frontend:3000
+        - BACKEND_PROXY=http://backend:8080
     restart: "always"
     ports:
       - "80:80"
-    volumes:
-      - ./.conf/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
-
+      - backend
+  
   frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
+    build: frontend
     depends_on:
       - backend
-
+  
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
+    build: backend
     user: user
     environment:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
-      tile-server:
+      renderer:
         condition: service_healthy
 
-  tile-server:
-    image: overv/openstreetmap-tile-server
-    volumes:
-      - osm-data:/data/database/
-      - osm-tiles:/data/tiles/
+  renderer:
+    build:
+      context: renderer
+      dockerfile: Dockerfile
+      args:
+        - DOWNLOAD_PBF=https://download.geofabrik.de/asia/india/northern-zone-latest.osm.pbf
+        - DOWNLOAD_POLY=https://osmtoday.com/asia/india/haryana.poly
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    command: "run"
+    volumes:
+      - osm-data:/data/database/
+      - osm-tiles:/data/tiles/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 1s
@@ -44,24 +48,8 @@ services:
       retries: 10
       start_period: 30s
 
-  tile-import:
-    image: overv/openstreetmap-tile-server
-    volumes:
-      - ./regions/northern-zone-latest.osm.pbf:/data/region.osm.pbf
-      - osm-data:/data/database/
-    command: "import"
-    profiles:
-      - "import"
-  
-  import:
-    image: busybox
-    profiles: ["import"]
-    depends_on:
-      tile-import:
-        condition: service_completed_successfully
-
 volumes:
-  osm-data:
-    external: true
   osm-tiles:
+    external: true
+  osm-data:
     external: true

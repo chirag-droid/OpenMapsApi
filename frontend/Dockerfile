@@ -19,7 +19,7 @@ COPY index.html index.html
 
 RUN trunk build
 
-FROM nginx:latest
+FROM nginx:alpine AS RUNTIME
 EXPOSE 3000
 
 COPY --from=build /frontend/dist /frontend
