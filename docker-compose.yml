@@ -36,7 +36,7 @@ services:
         - AUTOMATIC_UPDATES=disabled
         - DOWNLOAD_PBF=https://download.geofabrik.de/asia/india/northern-zone-latest.osm.pbf
         - DOWNLOAD_POLY=https://download.geofabrik.de/asia/india/northern-zone.poly
-        - FLAT_NODES=enabled
+        - FLAT_NODES=disabled
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}

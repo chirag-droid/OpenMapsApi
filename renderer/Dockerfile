@@ -3,7 +3,7 @@ FROM overv/openstreetmap-tile-server AS runtime
 ARG AUTOMATIC_UPDATES=disabled
 ARG DOWNLOAD_PBF=https://download.geofabrik.de/asia/india-latest.osm.pbf
 ARG DOWNLOAD_POLY=https://download.geofabrik.de/asia/india.poly
-ARG FLAT_NODES=enabled
+ARG FLAT_NODES=disabled
 
 ENV UPDATES=${AUTOMATIC_UPDATES}
 ENV DOWNLOAD_PBF=${DOWNLOAD_PBF}
