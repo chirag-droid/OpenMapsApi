@@ -1,0 +1,23 @@
+{
+	"name": "OpenMapsApi",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"tamasfe.even-better-toml",
+				"rust-lang.rust-analyzer",
+				"chenxuan.cargo-crate-completer"
+			]
+		}
+	},
+	"dockerComposeFile": "docker-compose.yml",
+	"remoteUser": "user",
+	"service": "workspace",
+	"workspaceFolder": "/workspace",
+	"forwardPorts": [
+		3000,
+		5432,
+		8080,
+		8000
+	],
+	"shutdownAction": "stopCompose"
+}
