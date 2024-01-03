@@ -1,0 +1,19 @@
+# This is only for railway deploy as railway doesn't allow volume keyword
+FROM overv/openstreetmap-tile-server AS runtime
+
+ARG DOWNLOAD_PBF=https://download.geofabrik.de/asia/india-latest.osm.pbf
+ARG DOWNLOAD_POLY=https://download.geofabrik.de/asia/india.poly
+
+ENV DOWNLOAD_PBF=${DOWNLOAD_PBF}
+ENV DOWNLOAD_POLY=${DOWNLOAD_POLY}
+
+RUN /run.sh import
+
+ENV POSTGRES_DB=${POSTGRES_DB}
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+ENTRYPOINT [ "/run.sh" ]
+CMD ["run"]
+
+EXPOSE 80 5432
