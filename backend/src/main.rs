@@ -20,7 +20,7 @@ async fn main() -> Result<()> {
 
     let (_guard1, _guard2) = install_tracing();
 
-    let pool = setup_database().await?;
+    let pool = setup_database()?;
     let route = setup_api().data(pool).with(Tracing);
 
     // dual-stacking on ipv4 and ipv6
