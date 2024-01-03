@@ -6,6 +6,7 @@ services:
       args:
         - FRONTEND_PROXY=http://frontend:3000
         - BACKEND_PROXY=http://backend:8080
+        - RENDERER_PROXY=http://renderer:80
     restart: "always"
     ports:
       - "80:80"
@@ -32,8 +33,10 @@ services:
       context: renderer
       dockerfile: Dockerfile
       args:
+        - AUTOMATIC_UPDATES=disabled
         - DOWNLOAD_PBF=https://download.geofabrik.de/asia/india/northern-zone-latest.osm.pbf
-        - DOWNLOAD_POLY=https://osmtoday.com/asia/india/haryana.poly
+        - DOWNLOAD_POLY=https://download.geofabrik.de/asia/india/northern-zone.poly
+        - FLAT_NODES=enabled
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}

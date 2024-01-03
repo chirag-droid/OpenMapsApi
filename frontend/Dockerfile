@@ -15,8 +15,10 @@ RUN cargo build --target wasm32-unknown-unknown --release
 RUN rm src/*.rs
 
 COPY src/ src/
+COPY scss/ scss/
 COPY index.html index.html
 
+COPY Trunk.toml Trunk.toml
 RUN trunk build
 
 FROM nginx:alpine AS RUNTIME

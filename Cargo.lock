@@ -611,6 +611,12 @@ dependencies = [
 name = "frontend"
 version = "0.1.0"
 dependencies = [
+ "gloo-console 0.3.0",
+ "gloo-utils 0.2.0",
+ "implicit-clone",
+ "leaflet",
+ "wasm-bindgen",
+ "web-sys",
  "yew",
 ]
 
@@ -1392,6 +1398,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 dependencies = [
  "spin 0.5.2",
+]
+
+[[package]]
+name = "leaflet"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f1ca4f4ecc791314ac38d50a5af6dc6506977aa7c7f0231b1bfd66989a9c4be3"
+dependencies = [
+ "js-sys",
+ "paste",
+ "url",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]

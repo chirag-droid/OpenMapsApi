@@ -10,7 +10,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     user: user
 
-  tile-server:
+  renderer:
     image: overv/openstreetmap-tile-server
     volumes:
       - osm-data:/data/database/
