@@ -88,5 +88,8 @@ impl Component for MapComponent {
 }
 
 fn add_tile_layer(map: &Map) {
-    TileLayer::new("/tile/{z}/{x}/{y}.png").add_to(map);
+    let tile_service = std::option_env!("TILE_SERVER")
+        .unwrap_or("/tile");
+
+    TileLayer::new(format!("{tile_service}/{{z}}/{{x}}/{{y}}.png").as_str()).add_to(map);
 }
