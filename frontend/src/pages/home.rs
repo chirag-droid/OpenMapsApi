@@ -4,11 +4,10 @@ use crate::leaflet_yew::{MapContainer, Navigation, TileComponent};
 
 #[function_component(Home)]
 pub fn home() -> Html {
-    let tile_service = std::option_env!("TILE_SERVER")
-        .unwrap_or("/tile");
+    let tile_service = std::option_env!("TILE_SERVER").unwrap_or("/tile");
 
-    let routing_service = std::option_env!("ROUTING_SERVER")
-        .unwrap_or("https://router.project-osrm.org/route/v1");
+    let routing_service =
+        std::option_env!("ROUTING_SERVER").unwrap_or("https://router.project-osrm.org/route/v1");
 
     html! {
         <main class="container mx-auto mt-4 p-4">

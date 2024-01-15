@@ -58,7 +58,7 @@ impl RoutingOptions {
 pub struct NavigationComponentProps {
     pub from: (f64, f64),
     pub to: (f64, f64),
-    pub url: AttrValue
+    pub url: AttrValue,
 }
 
 #[function_component(Navigation)]
