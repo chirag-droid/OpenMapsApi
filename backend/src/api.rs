@@ -1,12 +1,5 @@
-use poem::{
-    web::Data,
-    Result
-};
-use poem_openapi::{
-    param::Query,
-    payload::Json,
-    Object, OpenApi
-};
+use poem::{web::Data, Result};
+use poem_openapi::{param::Query, payload::Json, Object, OpenApi};
 
 type DbPool = sqlx::PgPool;
 
@@ -22,30 +15,33 @@ struct GeoAddress {
     address: Option<String>,
     city: Option<String>,
     state: Option<String>,
-    district: Option<String>
+    district: Option<String>,
 }
 
-fn default_precision() -> f64 { 400.0 }
-fn example_latitude() -> f64 { 29.363133 }
-fn example_longitude() -> f64 { 75.898217 }
+fn default_precision() -> f64 {
+    400.0
+}
+fn example_latitude() -> f64 {
+    29.363133
+}
+fn example_longitude() -> f64 {
+    75.898217
+}
 
-#[OpenApi(prefix_path="/api")]
+#[OpenApi(prefix_path = "/api")]
 impl OpenMapsApi {
     /// Reverse Geocode
-    /// 
+    ///
     /// ## Summary
-    /// 
+    ///
     /// Returns a human readable address of a coordinate.
-    #[oai(
-        path = "/reverse",
-        method = "get"
-    )]
+    #[oai(path = "/reverse", method = "get")]
     async fn reverse(
         &self,
         pool: Data<&DbPool>,
         #[oai(example = "example_latitude")] latitude: Query<f64>,
         #[oai(example = "example_longitude")] longitude: Query<f64>,
-        #[oai(default = "default_precision", example = "default_precision")] precision: Query<f64>
+        #[oai(default = "default_precision", example = "default_precision")] precision: Query<f64>,
     ) -> Result<Json<Vec<GeoAddress>>> {
         let result = sqlx::query_as!(GeoAddress, "
             --Since our osm data is in 3857 coordinate system we transform from 4326 system to 3857

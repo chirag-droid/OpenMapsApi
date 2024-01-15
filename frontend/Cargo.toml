@@ -7,13 +7,15 @@ authors = ["Chirag Singla <chirag.singla.pi@gmail.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = { version = "0.21.0", features = ["csr"]}
-implicit-clone = "0.4.8"
-leaflet = "0.4.0"
-wasm-bindgen = "0.2.89"
-gloo-console = "0.3.0"
 gloo-utils = "0.2.0"
+js-sys = "0.3.67"
+leaflet = "0.4.0"
+log = "0.4.20"
+wasm-logger = "0.2.0"
+wasm-bindgen = "0.2.89"
+yew = { version = "0.21.0", features = ["csr"]}
+yew-router = "0.18.0"
 
 [dependencies.web-sys]
-version = "0.3"
-features = ["HtmlAnchorElement", "console", "Window", "Document"]
+version = "0.3.66"
+features = ["Element"]

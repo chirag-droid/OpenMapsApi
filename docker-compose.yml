@@ -7,12 +7,15 @@ services:
         - FRONTEND_PROXY=http://frontend:3000
         - BACKEND_PROXY=http://backend:8080
         - RENDERER_PROXY=http://renderer:80
+        - ROUTER_PROXY=http://router:5000
     restart: "always"
     ports:
       - "80:80"
     depends_on:
       - frontend
       - backend
+      - renderer
+      - router
   
   frontend:
     build: frontend
@@ -27,6 +30,13 @@ services:
     depends_on:
       renderer:
         condition: service_healthy
+      router:
+  
+  router:
+    build:
+      context: router
+      args:
+        - DOWNLOAD_PBF=http://download.geofabrik.de/asia/india/northern-zone-latest.osm.pbf
 
   renderer:
     build:

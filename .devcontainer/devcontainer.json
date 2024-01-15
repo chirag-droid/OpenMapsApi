@@ -19,5 +19,6 @@
 		8080,
 		8000
 	],
-	"shutdownAction": "stopCompose"
+	"shutdownAction": "stopCompose",
+	"postStartCommand": "cargo binstall -y bunyan trunk sqlx-cli"
 }

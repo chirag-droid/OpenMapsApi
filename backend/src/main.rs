@@ -7,8 +7,8 @@ use color_eyre::eyre::Result;
 use database::setup_database;
 use dotenvy::dotenv;
 use logging::install_tracing;
-use poem::{Server, listener::TcpListener, Route, EndpointExt, middleware::Tracing};
-use poem_openapi::{OpenApiService, ContactObject};
+use poem::{listener::TcpListener, middleware::Tracing, EndpointExt, Route, Server};
+use poem_openapi::{ContactObject, OpenApiService};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -29,18 +29,22 @@ async fn main() -> Result<()> {
 }
 
 fn setup_api() -> Route {
-    let api_service =
-        OpenApiService::new(OpenMapsApi, "Open Maps Api", "0.0.1")
-            .contact(ContactObject::new().name("Chirag Singla").email("chirag.singla.pi@gmail.com"))
-            .server("/")
-            .description(
-                "Allows buyer and seller apps to use Open source maps \
+    let api_service = OpenApiService::new(OpenMapsApi, "Open Maps Api", "0.0.1")
+        .contact(
+            ContactObject::new()
+                .name("Chirag Singla")
+                .email("chirag.singla.pi@gmail.com"),
+        )
+        .server("/")
+        .description(
+            "Allows buyer and seller apps to use Open source maps \
                 for e-commerce functionality such as creating polygon(s) of points, \
                 generating motorable paths between 2 points, \
                 reverse-geocoding address to point on map, \
                 computing motorable distance between 2 points, \
-                mapping point to polygon / path interactively / using API, etc.");
-    
+                mapping point to polygon / path interactively / using API, etc.",
+        );
+
     let spec = api_service.spec_endpoint();
     let docs = api_service.rapidoc();
 

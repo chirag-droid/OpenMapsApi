@@ -1,8 +1,8 @@
 use tracing::level_filters::LevelFilter;
 use tracing_appender::non_blocking::WorkerGuard;
-use tracing_bunyan_formatter::{JsonStorageLayer, BunyanFormattingLayer};
+use tracing_bunyan_formatter::{BunyanFormattingLayer, JsonStorageLayer};
 use tracing_log::LogTracer;
-use tracing_subscriber::{EnvFilter, Registry, layer::SubscriberExt};
+use tracing_subscriber::{layer::SubscriberExt, EnvFilter, Registry};
 
 pub fn install_tracing() -> (WorkerGuard, WorkerGuard) {
     LogTracer::init().unwrap();
@@ -21,8 +21,14 @@ pub fn install_tracing() -> (WorkerGuard, WorkerGuard) {
     let subscriber = Registry::default()
         .with(env_filter)
         .with(JsonStorageLayer)
-        .with(BunyanFormattingLayer::new(app_name.to_string(), file_writer))
-        .with(BunyanFormattingLayer::new(app_name.to_string(), stdout_writer));
+        .with(BunyanFormattingLayer::new(
+            app_name.to_string(),
+            file_writer,
+        ))
+        .with(BunyanFormattingLayer::new(
+            app_name.to_string(),
+            stdout_writer,
+        ));
 
     tracing::subscriber::set_global_default(subscriber).unwrap();
 

@@ -1,6 +1,7 @@
 FROM rust:latest as build
 
 ARG TILE_SERVER="/tile"
+ARG ROUTING_SERVER="/api/route/v1"
 
 RUN rustup target add wasm32-unknown-unknown
 
@@ -18,11 +19,12 @@ RUN rm ./target/wasm32-unknown-unknown/release/deps/frontend*
 RUN rm src/*.rs
 
 COPY src/ src/
-COPY scss/ scss/
 COPY index.html index.html
+COPY tailwind.config.js tailwind.config.js
 COPY Trunk.toml Trunk.toml
 
 ENV TILE_SERVER=${TILE_SERVER}
+ENV ROUTING_SERVER=${ROUTING_SERVER}
 
 RUN trunk build
 

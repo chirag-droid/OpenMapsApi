@@ -23,13 +23,7 @@ USER $USERNAME
 
 RUN rustup target add wasm32-unknown-unknown
 
-RUN cargo install sqlx-cli --no-default-features --features native-tls,postgres
-
 RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-RUN cargo binstall -y bunyan
-RUN cargo binstall -y trunk
-
-RUN sudo apt-get install -y git-lfs
 
 EXPOSE 3000
 CMD ["/bin/sh", "-c", "while sleep 1000; do :; done"]
